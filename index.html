@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>try{document.documentElement.dataset.theme=JSON.parse(localStorage.getItem("xh_theme"))||"light";}catch(e){document.documentElement.dataset.theme="light";}</script>
+<title>启明 · 从小学到大学的成长手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=2">
+</head>
+<body>
+
+<!-- 导航 -->
+<nav>
+  <div class="wrap">
+    <a class="logo" href="index.html">启<em>明</em></a>
+    <div class="nav-right">
+      <div class="links">
+      <a href="stages.html">成长路线</a>
+      <a href="books.html">书单</a>
+      <a href="methods.html">方法论</a>
+      <a href="tools.html">修炼场</a>
+      <a href="ladder.html">成长阶梯</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色模式" title="切换深色/浅色模式">☾</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="deco">学</div>
+  <div class="wrap">
+    <p class="greet">从小学到大学 · 一份写给学生的成长手册</p>
+    <h1>学霸不是天赋，<br>是<span class="accent">一级一级养成</span>的。</h1>
+    <p class="sub">小学养习惯，初中建方法，高中拼效率，大学练自主。这本手册带你找到所在阶段，从今天开始修炼。</p>
+    <div class="meta-row">
+      <div class="meta">
+        <div class="num" id="stat-days"><small>第</small> 1 <small>天</small></div>
+        <div class="label">修炼进行中</div>
+      </div>
+      <div class="meta">
+        <div class="num" id="stat-tomatoes">0</div>
+        <div class="label">今日番茄</div>
+      </div>
+      <div class="meta">
+        <div class="num" id="stat-streak">0 <small>天</small></div>
+        <div class="label">连续打卡</div>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="stages.html">找到我的阶段</a>
+      <a class="btn btn-ghost" href="tools.html">直接开始修炼</a>
+    </div>
+  </div>
+</header>
+
+<!-- 手册目录 -->
+<section style="padding-top:60px;">
+  <div class="wrap">
+    <p class="eyebrow reveal">CONTENTS — 手册目录</p>
+    <h2 class="reveal">五个篇章，一套完整的养成系统</h2>
+    <p class="lead reveal">从认知到行动，从输入到回顾。每一章都可以独立阅读，合在一起就是一条完整的成长路径。</p>
+
+    <div class="hub-grid reveal">
+      <a class="hub-card wide" href="stages.html">
+        <span class="hc-idx">第一章 · ROADMAP</span>
+        <h3>成长路线</h3>
+        <p>小学、初中、高中、大学——四个学段的阶段目标、学习重点、习惯清单，以及每个阶段最容易踩的坑。</p>
+        <span class="hc-arrow">→</span>
+      </a>
+      <a class="hub-card" href="books.html">
+        <span class="hc-idx">第二章 · READING LIST</span>
+        <h3>必看书单</h3>
+        <p>38 本贯穿学生时代的书：文学、科普、历史、思维、心理，各类都有。</p>
+        <span class="hc-arrow">→</span>
+      </a>
+      <a class="hub-card" href="methods.html">
+        <span class="hc-idx">第三章 · METHODOLOGY</span>
+        <h3>学习方法论</h3>
+        <p>费曼技巧、间隔重复、主动回忆、深度工作——四个方法的完整操作手册。</p>
+        <span class="hc-arrow">→</span>
+      </a>
+      <a class="hub-card" href="tools.html">
+        <span class="hc-idx">第四章 · PRACTICE</span>
+        <h3>修炼场</h3>
+        <p>番茄钟、任务清单、习惯打卡——可以每天使用的在线修炼工具。</p>
+        <span class="hc-arrow">→</span>
+      </a>
+      <a class="hub-card" href="ladder.html">
+        <span class="hc-idx">第五章 · MILESTONES</span>
+        <h3>成长阶梯</h3>
+        <p>从小学到大学，八个关键里程碑。回望来路，看清自己走到了哪里。</p>
+        <span class="hc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 座右铭 -->
+<section class="motto" id="motto" style="padding-top:60px;">
+  <div class="wrap">
+    <blockquote class="reveal">
+      "种一棵树最好的时间是十年前，<br>其次是<span class="accent">现在</span>。"
+    </blockquote>
+    <p class="from reveal">— 写给每一个正在路上的学生</p>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  <div class="wrap">
+    <span>启明 · 学生成长手册（小学 → 大学）</span>
+    <span>每天进步 1%，一年后是原来的 <a href="index.html"><b>37</b> 倍</a></span>
+  </div>
+</footer>
+
+<script src="assets/main.js?v=2"></script>
+</body>
+</html>

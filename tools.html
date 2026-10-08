@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>try{document.documentElement.dataset.theme=JSON.parse(localStorage.getItem("xh_theme"))||"light";}catch(e){document.documentElement.dataset.theme="light";}</script>
+<title>修炼场 · 启明</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=2">
+</head>
+<body class="tools-body">
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="index.html">启<em>明</em></a>
+    <div class="nav-right">
+      <div class="links">
+      <a href="stages.html">成长路线</a>
+      <a href="books.html">书单</a>
+      <a href="methods.html">方法论</a>
+      <a href="tools.html" class="active">修炼场</a>
+      <a href="ladder.html">成长阶梯</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色模式" title="切换深色/浅色模式">☾</button>
+    </div>
+  </div>
+</nav>
+
+<!-- 页头 -->
+<header class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">04 — PRACTICE</p>
+    <h1>修炼场：<span class="accent">每天在这里完成你的修炼</span></h1>
+    <p class="lead">知道不等于做到。番茄钟、任务清单、习惯打卡——每个学段都用得上，把方法落实成每天的动作。你的数据保存在本机浏览器中，每天打开就能接着练。</p>
+    <div class="anchor-pills">
+      <a href="#tool-area">番茄钟</a>
+      <a href="#tool-area">今日任务</a>
+      <a href="#tool-area">习惯打卡</a>
+      <a href="#mindset">使用心法</a>
+    </div>
+  </div>
+</header>
+
+<!-- 今日统计 -->
+<section style="padding:56px 0 0;">
+  <div class="wrap">
+    <div class="hero meta-row" style="padding:0;margin:0;">
+      <div class="meta">
+        <div class="num" id="stat-days"><small>第</small> 1 <small>天</small></div>
+        <div class="label">修炼进行中</div>
+      </div>
+      <div class="meta">
+        <div class="num" id="stat-tomatoes">0</div>
+        <div class="label">今日番茄</div>
+      </div>
+      <div class="meta">
+        <div class="num" id="stat-streak">0 <small>天</small></div>
+        <div class="label">连续打卡</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 工具区 -->
+<section id="tool-area" style="padding-top:48px;">
+  <div class="wrap">
+    <div class="tool-tabs reveal">
+      <button class="tab active" data-panel="pomo">🍅 番茄钟</button>
+      <button class="tab" data-panel="todo">✓ 今日任务</button>
+      <button class="tab" data-panel="habit">◎ 习惯打卡</button>
+    </div>
+
+    <!-- 番茄钟 -->
+    <div class="tool-panel active" id="panel-pomo">
+      <div class="pomo-layout">
+        <div>
+          <div class="pomo-clock" id="pomoClock">
+            <div class="time" id="pomoTime">25:00</div>
+            <div class="mode" id="pomoMode">专注时间</div>
+          </div>
+          <div class="pomo-btns">
+            <button class="main" id="pomoStart">开始</button>
+            <button id="pomoReset">重置</button>
+          </div>
+        </div>
+        <div class="pomo-side">
+          <h3>一次只做一件事</h3>
+          <p>25 分钟全情专注，5 分钟彻底休息。每四个番茄后，来一次 15 分钟长休息。今天完成的每一个番茄，都会记录在上方的统计里。</p>
+          <div class="pomo-stats">
+            <div>
+              <div class="num" id="pomoToday">0</div>
+              <div class="label">今日完成</div>
+            </div>
+            <div>
+              <div class="num" id="pomoTotal">0</div>
+              <div class="label">累计完成</div>
+            </div>
+          </div>
+          <p class="hint">小学生建议：低年级可从 15 分钟短番茄起步，循序渐进。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 任务清单 -->
+    <div class="tool-panel" id="panel-todo">
+      <div class="todo-box">
+        <div class="todo-input-row">
+          <input type="text" id="todoInput" placeholder="写下今天最重要的三件事…" maxlength="60">
+          <button id="todoAdd">添加</button>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="todo-foot">
+          <span id="todoCount">今日 0 项任务</span>
+          <button class="clear" id="todoClear">清除已完成</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 习惯打卡 -->
+    <div class="tool-panel" id="panel-habit">
+      <div class="habit-box">
+        <div class="habit-head">
+          <h3>本周打卡</h3>
+          <span class="streak" id="habitStreak">🔥 连续 0 天</span>
+        </div>
+        <div class="habit-grid" id="habitGrid"></div>
+        <p style="margin-top:22px;font-size:13px;color:var(--ink-faint);">点击今天的日期完成打卡。连续打卡的天数会同步到首页统计。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 使用心法 -->
+<section id="mindset" style="padding-top:40px;">
+  <div class="wrap">
+    <p class="eyebrow reveal">使用心法</p>
+    <h2 class="reveal">工具再好，也要用对</h2>
+    <div class="tips-grid reveal">
+      <div class="tip-card">
+        <h4><span class="no">壹</span>番茄钟心法</h4>
+        <p>开始前写下唯一的任务；结束时无论进度如何都休息 5 分钟。别和疲惫硬拼——连续 4 个番茄后，长休息是效率的一部分，不是偷懒。</p>
+      </div>
+      <div class="tip-card">
+        <h4><span class="no">贰</span>任务清单心法</h4>
+        <p>每天最多列 3 件最重要的事，先啃最硬的骨头。列不完是正常的——清单是指南针，不是考卷，睡前清空大脑、更新明天即可。</p>
+      </div>
+      <div class="tip-card">
+        <h4><span class="no">叁</span>习惯打卡心法</h4>
+        <p>只打卡一个最重要的习惯，直到它稳定两个月再加新的。记住一条铁律：断一天可以原谅，绝不断两天——恢复的最好时机永远是今天。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 座右铭 -->
+<section class="motto" style="padding-top:40px;">
+  <div class="wrap">
+    <blockquote class="reveal">
+      "所谓天赋，不过是<span class="accent">日复一日</span>的另一个名字。"
+    </blockquote>
+    <p class="from reveal">— 修炼场入口处</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="index.html">首页</a>
+      <a href="stages.html">成长路线</a>
+      <a href="books.html">书单</a>
+      <a href="methods.html">方法论</a>
+      <a href="ladder.html">成长阶梯</a>
+    </div>
+    <span>启明 · 学生成长手册</span>
+  </div>
+</footer>
+
+<script src="assets/main.js?v=2"></script>
+</body>
+</html>
