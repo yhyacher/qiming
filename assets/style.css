@@ -408,6 +408,67 @@ footer .f-links { display: flex; gap: 20px; }
 .reveal { opacity: 0; transform: translateY(24px); transition: all .7s cubic-bezier(.2,.6,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 
+/* ---------- 书单语录 ---------- */
+.q-date { font-size: 14px; color: var(--ink-faint); letter-spacing: 0.15em; margin-top: 12px; }
+.q-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 44px;
+}
+.q-card { background: var(--surface); padding: 38px 30px; display: flex; flex-direction: column; transition: background .3s; }
+.q-card:hover { background: var(--accent-soft); }
+.q-card .q-mark { font-family: var(--serif); font-size: 40px; color: var(--accent); line-height: 1; margin-bottom: 14px; }
+.q-card .q-text { font-family: var(--serif); font-size: 17.5px; font-weight: 600; line-height: 1.9; flex: 1; }
+.q-card .q-from { margin-top: 24px; font-size: 13px; color: var(--ink-faint); letter-spacing: 0.05em; }
+.q-card .q-from b { color: var(--accent); font-weight: 600; }
+.q-arch { margin-top: 0; }
+.q-arch h4 {
+  font-size: 13px; letter-spacing: 0.3em; color: var(--ink-faint);
+  font-weight: 500; margin: 44px 0 8px; padding-bottom: 12px; border-bottom: 1px solid var(--line);
+}
+.q-list { list-style: none; }
+.q-list li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.q-list li:last-child { border-bottom: none; }
+.q-list .qa-text { font-family: var(--serif); font-size: 16.5px; font-weight: 600; line-height: 1.9; }
+.q-list .qa-text::before { content: "“ "; color: var(--accent); }
+.q-list .qa-text::after { content: " ”"; color: var(--accent); }
+.q-list .qa-from { font-size: 13px; color: var(--ink-faint); margin-top: 8px; letter-spacing: 0.05em; }
+.q-list .qa-from b { color: var(--accent); font-weight: 600; }
+
+/* 往日三则 · 折叠收纳 */
+.q-hist { border-bottom: 1px solid var(--line); }
+.q-hist-head {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 18px 4px; cursor: pointer; list-style: none; user-select: none;
+}
+.q-hist-head::-webkit-details-marker { display: none; }
+.q-hist-head::marker { content: none; }
+.q-hist-date { font-size: 14px; font-weight: 500; letter-spacing: 0.1em; color: var(--ink); white-space: nowrap; transition: color .2s; }
+.q-hist-books { flex: 1; font-size: 13px; color: var(--ink-faint); letter-spacing: 0.05em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.q-hist-mark { color: var(--accent); font-size: 15px; line-height: 1; transition: transform .25s; }
+.q-hist[open] .q-hist-mark { transform: rotate(45deg); }
+.q-hist-head:hover .q-hist-date { color: var(--accent); }
+.q-hist > .q-list { padding: 4px 4px 6px; }
+.q-hist > .q-list li:first-child { padding-top: 10px; }
+.q-stage:first-child { border-top: 1px solid var(--line); }
+.q-stage-count { text-align: right; }
+
+/* 往日三则 · 分页 */
+.q-pagination {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 8px; padding-top: 28px;
+}
+.q-page-btn {
+  min-width: 38px; height: 38px; padding: 0 12px;
+  border: 1px solid transparent; border-radius: 2px; background: transparent;
+  color: var(--ink-soft); font-family: var(--sans); font-size: 13px;
+  letter-spacing: 0.05em; cursor: pointer; transition: all .2s;
+}
+.q-page-btn:hover:not(:disabled) { border-color: var(--line); color: var(--accent); }
+.q-page-btn.is-active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.q-page-btn:disabled { opacity: .35; cursor: default; }
+.q-page-ellipsis { min-width: 20px; text-align: center; color: var(--ink-faint); font-size: 13px; }
+.q-page-info { width: 100%; margin-top: 4px; text-align: center; color: var(--ink-faint); font-size: 12px; letter-spacing: 0.08em; }
+
 /* ---------- 响应式 ---------- */
 @media (max-width: 768px) {
   section { padding: 64px 0; }
@@ -422,4 +483,5 @@ footer .f-links { display: flex; gap: 20px; }
   .habit-grid { gap: 6px; }
   .todo-box, .habit-box { max-width: none; }
   .tips-grid { grid-template-columns: 1fr; }
+  .q-grid { grid-template-columns: 1fr; }
 }

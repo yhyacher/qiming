@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>try{document.documentElement.dataset.theme=JSON.parse(localStorage.getItem("xh_theme"))||"light";}catch(e){document.documentElement.dataset.theme="light";}</script>
+<title>书单语录 · 启明</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=5">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="index.html">启<em>明</em></a>
+    <div class="nav-right">
+      <div class="links">
+      <a href="stages.html">成长路线</a>
+      <a href="books.html">书单</a>
+      <a href="quotes.html" class="active">书单语录</a>
+      <a href="methods.html">方法论</a>
+      <a href="tools.html">修炼场</a>
+      <a href="ladder.html">成长阶梯</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色模式" title="切换深色/浅色模式">☾</button>
+    </div>
+  </div>
+</nav>
+
+<!-- 页头 -->
+<header class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">02 · 附 — QUOTES</p>
+    <h1>书单语录：<span class="accent">每日三则</span></h1>
+    <p class="lead">从书单 38 本书里摘出的经典段落。每天轮换三则，常读常新——读不下去整本书的时候，先从一句话开始。</p>
+    <div class="anchor-pills">
+      <a href="#today">今日摘录</a>
+      <a href="#history">往日三则</a>
+      <a href="#archive">语录库</a>
+      <a href="books.html">返回书单 →</a>
+    </div>
+  </div>
+</header>
+
+<!-- 今日摘录 -->
+<section id="today" style="padding-top:64px;">
+  <div class="wrap">
+    <p class="eyebrow reveal">今日摘录</p>
+    <h2 class="reveal">今天，读这三句话</h2>
+    <p class="q-date reveal" id="qDate"></p>
+    <div class="q-grid reveal" id="qToday"></div>
+  </div>
+</section>
+
+<!-- 历史语录 -->
+<section id="history" style="padding-top:80px;">
+  <div class="wrap">
+    <p class="eyebrow reveal">历史语录</p>
+    <h2 class="reveal">往日三则</h2>
+    <p class="lead reveal">每天展示过的三则都会留档在此，按日期倒序折叠收纳。错过了某一天，点开来补上。</p>
+    <div class="q-arch reveal" id="qHistory"></div>
+  </div>
+</section>
+
+<!-- 语录库 -->
+<section id="archive" style="padding-top:80px;">
+  <div class="wrap">
+    <p class="eyebrow reveal">语录库</p>
+    <h2 class="reveal">全部收录</h2>
+    <p class="lead reveal">按学段分组。遇到击中你的句子，就去书单里找到那本书，把它读完。</p>
+    <div class="q-arch reveal" id="qArchive"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="index.html">首页</a>
+      <a href="stages.html">成长路线</a>
+      <a href="books.html">书单</a>
+      <a href="methods.html">方法论</a>
+      <a href="tools.html">修炼场</a>
+      <a href="ladder.html">成长阶梯</a>
+    </div>
+    <span>启明 · 学生成长手册</span>
+  </div>
+</footer>
+
+<script src="assets/main.js?v=3"></script>
+<script>
+/* ================== 语录数据（出自书单 38 本） ================== */
+const QUOTES = [
+  /* 小学书单 */
+  { t: "你一直是我的朋友，这件事本身就是一件了不起的事。", b: "《夏洛的网》", a: "E.B.怀特", s: "primary" },
+  { t: "真正重要的东西，用眼睛是看不见的，只有用心才能看清。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "无论哪个孩子，当他出世的时候，都具有优良的品质。", b: "《窗边的小豆豆》", a: "黑柳彻子", s: "primary" },
+  { t: "在这个绿色的小小世界里，不知道会有多少忙碌的小生命在生生不息。", b: "《昆虫记》", a: "法布尔", s: "primary" },
+  { t: "美的力量绝不亚于思想的力量。", b: "《草房子》", a: "曹文轩", s: "primary" },
+
+  /* 初中书单 */
+  { t: "生活不能等待别人来安排，要自己去争取和奋斗。", b: "《平凡的世界》", a: "路遥", s: "junior" },
+  { t: "爸爸的花儿落了，我也不再是小孩子。", b: "《城南旧事》", a: "林海音", s: "junior" },
+  { t: "你是谁？世界从哪里来？", b: "《苏菲的世界》", a: "乔斯坦·贾德", s: "junior" },
+  { t: "给岁月以文明，而不是给文明以岁月。", b: "《三体》", a: "刘慈欣", s: "junior" },
+  { t: "辛酸的眼泪是培养你心灵的酒浆。", b: "《傅雷家书》", a: "傅雷", s: "junior" },
+  { t: "从来如此，便对么？", b: "《呐喊》", a: "鲁迅", s: "junior" },
+  { t: "决定我们成为什么样的人的，不是我们的能力，而是我们的选择。", b: "《哈利·波特》系列", a: "J.K.罗琳", s: "junior" },
+
+  /* 高中书单 */
+  { t: "人是为活着本身而活着的，而不是为了活着之外的任何事物所活着。", b: "《活着》", a: "余华", s: "senior" },
+  { t: "世事洞明皆学问，人情练达即文章。", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+  { t: "满地都是六便士，他却抬头看见了月亮。", b: "《月亮与六便士》", a: "毛姆", s: "senior" },
+  { t: "从基层上看去，中国社会是乡土性的。", b: "《乡土中国》", a: "费孝通", s: "senior" },
+  { t: "中国两千年来，以道德代替法制，这是一切问题的症结。", b: "《万历十五年》", a: "黄仁宇", s: "senior" },
+  { t: "我们并没有驯化小麦，反而是小麦驯化了我们。", b: "《人类简史》", a: "尤瓦尔·赫拉利", s: "senior" },
+  { t: "天才是训练的产物，而训练的意义在于不断走出舒适区。", b: "《刻意练习》", a: "安德斯·艾利克森", s: "senior" },
+  { t: "如果我们找到了宇宙为何存在的答案，那将是人类理性的终极胜利。", b: "《时间简史》", a: "霍金", s: "senior" },
+  { t: "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", b: "《苏东坡传》", a: "林语堂 · 引苏轼词", s: "senior" },
+
+  /* 大学书单 */
+  { t: "我们对自己确信的事物过于自信，却很少意识到自己不知道什么。", b: "《思考，快与慢》", a: "丹尼尔·卡尼曼", s: "college" },
+  { t: "批判性思维不是怀疑一切，而是有依据地判断一切。", b: "《学会提问》", a: "尼尔·布朗", s: "college" },
+  { t: "阅读越主动，效果越好；对作品要求的越多，获得的就越多。", b: "《如何阅读一本书》", a: "莫提默·艾德勒", s: "college" },
+  { t: "决定你能走多远的，不是天赋的起点，而是你如何看待努力与失败。", b: "《终身成长》", a: "卡罗尔·德韦克", s: "college" },
+  { t: "各族群的历史循着不同的轨迹开展，那是环境而非生物差异造成的。", b: "《枪炮、病菌与钢铁》", a: "贾雷德·戴蒙德", s: "college" },
+  { t: "理解中国经济，先要理解政府在其中扮演的角色。", b: "《置身事内》", a: "兰小欢", s: "college" },
+  { t: "自由就是被别人讨厌。", b: "《被讨厌的勇气》", a: "岸见一郎", s: "college" },
+  { t: "不带评论的观察，是人类智力的最高形式。", b: "《非暴力沟通》", a: "马歇尔·卢森堡", s: "college" },
+  { t: "反过来想，总是反过来想。", b: "《穷查理宝典》", a: "查理·芒格", s: "college" },
+
+  /* 2026-10-20 新增 */
+  { t: "只要你是天鹅蛋，就是生在养鸡场里也没有什么关系。", b: "《安徒生童话》", a: "安徒生", s: "primary" },
+  { t: "心生，种种魔生；心灭，种种魔灭。", b: "《西游记》", a: "吴承恩", s: "junior" },
+  { t: "一个人可以被毁灭，但不能被打败。", b: "《老人与海》", a: "海明威", s: "senior" },
+
+  /* 2026-10-21 新增 */
+  { t: "她们俩在光明和快乐中飞走了，越飞越高，飞到那没有寒冷，没有饥饿，也没有痛苦的地方去了。", b: "《安徒生童话》", a: "安徒生", s: "primary" },
+  { t: "雨下给富人，也下给穷人；下给义人，也下给不义的人。其实，雨并不公道，因为下落在一个没有公道的世界上。", b: "《骆驼祥子》", a: "老舍", s: "junior" },
+  { t: "痛苦 + 反思 = 进步。", b: "《原则》", a: "瑞·达利欧", s: "college" },
+
+  /* 2026-10-22 新增 */
+  { t: "正是你为你的玫瑰花费的时间，才使你的玫瑰变得如此重要。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "即使最平凡的人，也得要为他那个世界的存在而战斗。", b: "《平凡的世界》", a: "路遥", s: "junior" },
+  { t: "过去都是假的，回忆是一条没有归途的路。", b: "《百年孤独》", a: "加西亚·马尔克斯", s: "college" },
+
+  /* 2026-10-23 新增 */
+  { t: "谁都知道人活着该做一点有意义的事情。", b: "《夏洛的网》", a: "E.B.怀特", s: "primary" },
+  { t: "弱小和无知不是生存的障碍，傲慢才是。", b: "《三体》", a: "刘慈欣", s: "junior" },
+  { t: "围在城里的人想逃出来，城外的人想冲进去。对婚姻也罢，职业也罢，人生的愿望大都如此。", b: "《围城》", a: "钱钟书", s: "senior" },
+
+  /* 2026-10-26 新增 */
+  { t: "世界上最可怕的事情，莫过于有眼睛却发现不了美，有耳朵却不会欣赏音乐，有心灵却无法理解什么是真。", b: "《窗边的小豆豆》", a: "黑柳彻子", s: "primary" },
+  { t: "希望是本无所谓有，无所谓无的。这正如地上的路；其实地上本没有路，走的人多了，也便成了路。", b: "《呐喊》", a: "鲁迅", s: "junior" },
+  { t: "自控力最强的人不是从与自我的较量中获得自控，而是学会了如何接受相互冲突的自我，并将这些自我融为一体。", b: "《自控力》", a: "凯利·麦格尼格尔", s: "college" },
+
+  /* 2026-10-27 新增 */
+  { t: "在海的远处，水是那么蓝，像最美丽的矢车菊花瓣，同时又是那么清，像最明亮的玻璃。", b: "《安徒生童话》", a: "安徒生", s: "primary" },
+  { t: "假作真时真亦假，无为有处有还无。", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+  { t: "我步入丛林，因为我希望生活得有意义，我希望活得深刻，并汲取生命中所有的精华。", b: "《瓦尔登湖》", a: "亨利·戴维·梭罗", s: "college" },
+
+  /* 2026-10-28 新增 */
+  { t: "所有的大人最初都是孩子，只是很少有人记得这一点。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "赤子便是不知道孤独的。赤子孤独了，会创造一个世界，创造许多心灵的朋友！", b: "《傅雷家书》", a: "傅雷", s: "junior" },
+  { t: "身后有余忘缩手，眼前无路想回头。", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+
+  /* 2026-10-29 新增 */
+  { t: "威尔伯永远忘不了夏洛。它虽然热爱它的子女、孙子女、曾孙子女，可是这些新蜘蛛没有一只能取代夏洛在它心中的位置。", b: "《夏洛的网》", a: "E.B.怀特", s: "primary" },
+  { t: "夏天过去，秋天过去，冬天又来了，骆驼队又来了，但是童年却一去不还。", b: "《城南旧事》", a: "林海音", s: "junior" },
+  { t: "满纸荒唐言，一把辛酸泪！都云作者痴，谁解其中味？", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+
+  /* 2026-11-02 新增 */
+  { t: "当我还是一只丑小鸭的时候，我做梦也没有想到会有这么多的幸福！", b: "《安徒生童话》", a: "安徒生", s: "primary" },
+  { t: "凡事总须研究，才会明白。", b: "《呐喊》", a: "鲁迅", s: "junior" },
+  { t: "机关算尽太聪明，反算了卿卿性命。", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+
+  /* 2026-11-03 新增 */
+  { t: "星星发亮是为了让每一个人有一天都能找到属于自己的星星。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "一个人惟有敢于正视现实，正视错误，用理智分析，彻底感悟，才不至于被回忆侵蚀。", b: "《傅雷家书》", a: "傅雷", s: "junior" },
+  { t: "太多的资讯就如同太少的资讯一样，都是一种对理解力的阻碍。", b: "《如何阅读一本书》", a: "莫提默·艾德勒", s: "college" },
+
+  /* 2026-11-04 新增 */
+  { t: "如果你驯养了我，我们将会彼此需要，对我而言，你将是宇宙间的唯一了，我对你来说，也是世界上唯一的了。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "以笑的方式哭，在死亡的伴随下活着。", b: "《活着》", a: "余华", s: "senior" },
+  { t: "要得到你想要的某样东西，最可靠的办法是让你自己配得上它。", b: "《穷查理宝典》", a: "查理·芒格", s: "college" },
+
+  /* 2026-11-05 新增 */
+  { t: "如果你说你在下午四点来，从三点钟开始，我就开始感觉很快乐，时间越临近，我就越来越感到快乐。", b: "《小王子》", a: "圣埃克苏佩里", s: "primary" },
+  { t: "生活中真正的勇士向来默默无闻，喧哗不止的永远是自视高贵的一群。", b: "《平凡的世界》", a: "路遥", s: "junior" },
+  { t: "决定我们自身的不是过去的经历，而是我们自己赋予经历的意义。", b: "《被讨厌的勇气》", a: "岸见一郎", s: "college" },
+
+  /* 2026-11-06 新增 */
+  { t: "生命到底是什么啊？我们出生，我们活上一阵子，我们死去。", b: "《夏洛的网》", a: "E.B.怀特", s: "primary" },
+  { t: "好风频借力，送我上青云！", b: "《红楼梦》", a: "曹雪芹", s: "senior" },
+  { t: "人生不是与他人的比赛。", b: "《被讨厌的勇气》", a: "岸见一郎", s: "college" }
+];
+
+const STAGE_LABEL = { primary: "小学书单", junior: "初中书单", senior: "高中书单", college: "大学书单" };
+
+/* ================== 历史语录（每日三则留档，新的在前） ================== */
+const HISTORY = [
+  { d: "2026-11-06", p: [
+    { t: "不带评论的观察，是人类智力的最高形式。", b: "《非暴力沟通》", a: "马歇尔·卢森堡" },
+    { t: "你是谁？世界从哪里来？", b: "《苏菲的世界》", a: "乔斯坦·贾德" },
+    { t: "人是为活着本身而活着的，而不是为了活着之外的任何事物所活着。", b: "《活着》", a: "余华" }
+  ]},
+  { d: "2026-11-05", p: [
+    { t: "不带评论的观察，是人类智力的最高形式。", b: "《非暴力沟通》", a: "马歇尔·卢森堡" },
+    { t: "理解中国经济，先要理解政府在其中扮演的角色。", b: "《置身事内》", a: "兰小欢" },
+    { t: "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", b: "《苏东坡传》", a: "林语堂 · 引苏轼词" }
+  ]},
+  { d: "2026-11-04", p: [
+    { t: "辛酸的眼泪是培养你心灵的酒浆。", b: "《傅雷家书》", a: "傅雷" },
+    { t: "我们对自己确信的事物过于自信，却很少意识到自己不知道什么。", b: "《思考，快与慢》", a: "丹尼尔·卡尼曼" },
+    { t: "自控力最强的人不是从与自我的较量中获得自控，而是学会了如何接受相互冲突的自我，并将这些自我融为一体。", b: "《自控力》", a: "凯利·麦格尼格尔" }
+  ]},
+  { d: "2026-11-03", p: [
+    { t: "所有的大人最初都是孩子，只是很少有人记得这一点。", b: "《小王子》", a: "圣埃克苏佩里" },
+    { t: "夏天过去，秋天过去，冬天又来了，骆驼队又来了，但是童年却一去不还。", b: "《城南旧事》", a: "林海音" },
+    { t: "一个人可以被毁灭，但不能被打败。", b: "《老人与海》", a: "海明威" }
+  ]},
+  { d: "2026-11-02", p: [
+    { t: "凡事总须研究，才会明白。", b: "《呐喊》", a: "鲁迅" },
+    { t: "决定你能走多远的，不是天赋的起点，而是你如何看待努力与失败。", b: "《终身成长》", a: "卡罗尔·德韦克" },
+    { t: "世事洞明皆学问，人情练达即文章。", b: "《红楼梦》", a: "曹雪芹" }
+  ]},
+  { d: "2026-10-29", p: [
+    { t: "你一直是我的朋友，这件事本身就是一件了不起的事。", b: "《夏洛的网》", a: "E.B.怀特" },
+    { t: "一个人可以被毁灭，但不能被打败。", b: "《老人与海》", a: "海明威" },
+    { t: "只要你是天鹅蛋，就是生在养鸡场里也没有什么关系。", b: "《安徒生童话》", a: "安徒生" }
+  ]},
+  { d: "2026-10-28", p: [
+    { t: "世界上最可怕的事情，莫过于有眼睛却发现不了美，有耳朵却不会欣赏音乐，有心灵却无法理解什么是真。", b: "《窗边的小豆豆》", a: "黑柳彻子" },
+    { t: "一个人可以被毁灭，但不能被打败。", b: "《老人与海》", a: "海明威" },
+    { t: "理解中国经济，先要理解政府在其中扮演的角色。", b: "《置身事内》", a: "兰小欢" }
+  ]},
+  { d: "2026-10-27", p: [
+    { t: "中国两千年来，以道德代替法制，这是一切问题的症结。", b: "《万历十五年》", a: "黄仁宇" },
+    { t: "一个人可以被毁灭，但不能被打败。", b: "《老人与海》", a: "海明威" },
+    { t: "我们并没有驯化小麦，反而是小麦驯化了我们。", b: "《人类简史》", a: "尤瓦尔·赫拉利" }
+  ]},
+  { d: "2026-10-26", p: [
+    { t: "谁都知道人活着该做一点有意义的事情。", b: "《夏洛的网》", a: "E.B.怀特" },
+    { t: "人是为活着本身而活着的，而不是为了活着之外的任何事物所活着。", b: "《活着》", a: "余华" },
+    { t: "决定你能走多远的，不是天赋的起点，而是你如何看待努力与失败。", b: "《终身成长》", a: "卡罗尔·德韦克" }
+  ]},
+  { d: "2026-10-23", p: [
+    { t: "弱小和无知不是生存的障碍，傲慢才是。", b: "《三体》", a: "刘慈欣" },
+    { t: "你一直是我的朋友，这件事本身就是一件了不起的事。", b: "《夏洛的网》", a: "E.B.怀特" },
+    { t: "不带评论的观察，是人类智力的最高形式。", b: "《非暴力沟通》", a: "马歇尔·卢森堡" }
+  ]},
+  { d: "2026-10-22", p: [
+    { t: "自由就是被别人讨厌。", b: "《被讨厌的勇气》", a: "岸见一郎" },
+    { t: "痛苦 + 反思 = 进步。", b: "《原则》", a: "瑞·达利欧" },
+    { t: "决定我们成为什么样的人的，不是我们的能力，而是我们的选择。", b: "《哈利·波特》系列", a: "J.K.罗琳" }
+  ]},
+  { d: "2026-10-21", p: [
+    { t: "你一直是我的朋友，这件事本身就是一件了不起的事。", b: "《夏洛的网》", a: "E.B.怀特" },
+    { t: "决定你能走多远的，不是天赋的起点，而是你如何看待努力与失败。", b: "《终身成长》", a: "卡罗尔·德韦克" },
+    { t: "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", b: "《苏东坡传》", a: "林语堂 · 引苏轼词" }
+  ]},
+  { d: "2026-10-20", p: [
+    { t: "世事洞明皆学问，人情练达即文章。", b: "《红楼梦》", a: "曹雪芹" },
+    { t: "给岁月以文明，而不是给文明以岁月。", b: "《三体》", a: "刘慈欣" },
+    { t: "美的力量绝不亚于思想的力量。", b: "《草房子》", a: "曹文轩" }
+  ]}
+];
+
+/* ---------- 今日三则：日期种子确定性轮换 ---------- */
+(function renderToday() {
+  const ds = todayStr();
+  let seed = 0;
+  for (const c of ds) seed = (seed * 31 + c.charCodeAt(0)) >>> 0;
+  const used = new Set(), picks = [];
+  for (let i = 0; i < 3; i++) {
+    seed = (seed * 1103515245 + 12345) >>> 0;
+    let idx = seed % QUOTES.length;
+    while (used.has(idx)) idx = (idx + 1) % QUOTES.length;
+    used.add(idx); picks.push(QUOTES[idx]);
+  }
+  const grid = $("qToday");
+  grid.innerHTML = "";
+  picks.forEach(q => {
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.innerHTML = '<div class="q-mark">“</div><div class="q-text"></div><div class="q-from"><b></b> · <span></span></div>';
+    card.querySelector(".q-text").textContent = q.t;
+    card.querySelector(".q-from b").textContent = q.b;
+    card.querySelector(".q-from span").textContent = q.a;
+    grid.appendChild(card);
+  });
+  const d = new Date();
+  $("qDate").textContent = d.getFullYear() + " 年 " + (d.getMonth() + 1) + " 月 " + d.getDate() + " 日 · 星期" + ["日","一","二","三","四","五","六"][d.getDay()];
+})();
+
+/* ---------- 语录库：按学段折叠分组，默认收起 ---------- */
+(function renderArchive() {
+  const box = $("qArchive");
+  box.innerHTML = "";
+  ["primary", "junior", "senior", "college"].forEach(stage => {
+    const list = QUOTES.filter(q => q.s === stage);
+    if (!list.length) return;
+    const det = document.createElement("details");
+    det.className = "q-hist q-stage";
+    const sum = document.createElement("summary");
+    sum.className = "q-hist-head";
+    sum.innerHTML = '<span class="q-hist-date"></span><span class="q-hist-books q-stage-count"></span><span class="q-hist-mark">＋</span>';
+    sum.querySelector(".q-hist-date").textContent = STAGE_LABEL[stage];
+    sum.querySelector(".q-stage-count").textContent = "共 " + list.length + " 条";
+    det.appendChild(sum);
+    const ul = document.createElement("ul");
+    ul.className = "q-list";
+    list.forEach(q => {
+      const li = document.createElement("li");
+      li.innerHTML = '<div class="qa-text"></div><div class="qa-from"><b></b> · <span></span></div>';
+      li.querySelector(".qa-text").textContent = q.t;
+      li.querySelector(".qa-from b").textContent = q.b;
+      li.querySelector(".qa-from span").textContent = q.a;
+      ul.appendChild(li);
+    });
+    det.appendChild(ul);
+    box.appendChild(det);
+  });
+})();
+
+/* ---------- 往日三则：按日期倒序留档（每页最多 10 天，最新一天默认展开） ---------- */
+(function renderHistory() {
+  const box = $("qHistory");
+  if (!box) return;
+  const PAGE_SIZE = 10;
+  const totalPages = Math.max(1, Math.ceil(HISTORY.length / PAGE_SIZE));
+  let currentPage = 1;
+
+  function pageItems() {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const pages = [...new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]
+      .filter(p => p >= 1 && p <= totalPages))].sort((a, b) => a - b);
+    const items = [];
+    pages.forEach((p, i) => {
+      if (i && p - pages[i - 1] > 1) items.push("ellipsis-" + i);
+      items.push(p);
+    });
+    return items;
+  }
+
+  function draw() {
+    box.innerHTML = "";
+    const start = (currentPage - 1) * PAGE_SIZE;
+    HISTORY.slice(start, start + PAGE_SIZE).forEach((entry, i) => {
+      const dt = new Date(entry.d + "T00:00:00");
+      const det = document.createElement("details");
+      det.className = "q-hist";
+      if (start + i === 0) det.open = true;
+      const sum = document.createElement("summary");
+      sum.className = "q-hist-head";
+      sum.innerHTML = '<span class="q-hist-date"></span><span class="q-hist-books"></span><span class="q-hist-mark">＋</span>';
+      sum.querySelector(".q-hist-date").textContent = dt.getFullYear() + " 年 " + (dt.getMonth() + 1) + " 月 " + dt.getDate() + " 日 · 星期" + ["日","一","二","三","四","五","六"][dt.getDay()];
+      sum.querySelector(".q-hist-books").textContent = entry.p.map(q => q.b).join(" · ");
+      det.appendChild(sum);
+      const ul = document.createElement("ul");
+      ul.className = "q-list";
+      entry.p.forEach(q => {
+        const li = document.createElement("li");
+        li.innerHTML = '<div class="qa-text"></div><div class="qa-from"><b></b> · <span></span></div>';
+        li.querySelector(".qa-text").textContent = q.t;
+        li.querySelector(".qa-from b").textContent = q.b;
+        li.querySelector(".qa-from span").textContent = q.a;
+        ul.appendChild(li);
+      });
+      det.appendChild(ul);
+      box.appendChild(det);
+    });
+
+    if (totalPages <= 1) return;
+    const pager = document.createElement("div");
+    pager.className = "q-pagination";
+    pager.setAttribute("role", "navigation");
+    pager.setAttribute("aria-label", "往日三则分页");
+
+    function addButton(label, page, options = {}) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "q-page-btn" + (options.active ? " is-active" : "");
+      btn.textContent = label;
+      btn.disabled = !!options.disabled;
+      btn.setAttribute("aria-label", options.ariaLabel || "第 " + page + " 页");
+      if (options.active) btn.setAttribute("aria-current", "page");
+      btn.addEventListener("click", () => {
+        currentPage = page;
+        draw();
+      });
+      pager.appendChild(btn);
+    }
+
+    addButton("上一页", currentPage - 1, { disabled: currentPage === 1, ariaLabel: "上一页" });
+    pageItems().forEach(item => {
+      if (typeof item === "string") {
+        const ellipsis = document.createElement("span");
+        ellipsis.className = "q-page-ellipsis";
+        ellipsis.textContent = "…";
+        ellipsis.setAttribute("aria-hidden", "true");
+        pager.appendChild(ellipsis);
+      } else {
+        addButton(String(item), item, { active: item === currentPage });
+      }
+    });
+    addButton("下一页", currentPage + 1, { disabled: currentPage === totalPages, ariaLabel: "下一页" });
+
+    const info = document.createElement("div");
+    info.className = "q-page-info";
+    info.textContent = "显示 " + (start + 1) + "–" + Math.min(start + PAGE_SIZE, HISTORY.length) + " 条 · 共 " + HISTORY.length + " 天";
+    pager.appendChild(info);
+    box.appendChild(pager);
+  }
+
+  draw();
+})();
+</script>
+</body>
+</html>
